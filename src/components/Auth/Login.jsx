@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import axios from '../../axios';
+import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
 
@@ -9,14 +9,14 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const history = useHistory();
+  const navigate = useNavigate(); // Updated to useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await axios.post('/auth/login', { email, password });
       login(data.token);
-      history.push('/dashboard');
+      navigate('/dashboard'); // Updated to useNavigate
     } catch (error) {
       setMessage('Invalid credentials');
     }
